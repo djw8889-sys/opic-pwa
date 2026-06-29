@@ -1,0 +1,25 @@
+{
+  "name": "마이오픽 — 내 상황으로 만드는 오픽 스크립트",
+  "short_name": "마이오픽",
+  "description": "오픽 주제를 고르고 내 상황을 입력하면 AI가 맞춤 대본을 만들고, 문장별 쉐도잉 연습과 모의고사까지 한 곳에서.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1c1b19",
+  "theme_color": "#1c1b19",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
