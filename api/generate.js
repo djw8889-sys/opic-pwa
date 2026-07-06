@@ -14,17 +14,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
-        })
-      }
-    );
+    // AQ. 형식 키는 Bearer 인증, AIzaSy 형식은 ?key= 쿼리 파라미터 사용
+    const isNewFormat = apiKey.startsWith('AQ.');
+    const url = isNewFormat
+      ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+      : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const headers = { 'Content-Type': 'application/json' };
+    if (isNewFormat) headers['Authorization'] = `Bearer ${apiKey}`;
+
+    const geminiRes = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
+      })
+    });
 
     const data = await geminiRes.json();
 
