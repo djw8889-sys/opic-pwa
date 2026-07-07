@@ -14,21 +14,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    // AQ. 형식 키는 Bearer 인증, AIzaSy 형식은 ?key= 쿼리 파라미터 사용
-    const isNewFormat = apiKey.startsWith('AQ.');
-    const url = isNewFormat
-      ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
-      : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-    const headers = { 'Content-Type': 'application/json' };
-    if (isNewFormat) headers['Authorization'] = `Bearer ${apiKey}`;
+    // x-goog-api-key 헤더는 신형(AQ.)·구형(AIzaSy) 키 모두 지원
+    // gemini-2.0-flash는 무료 할당량이 0이라 2.5-flash 사용
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     const geminiRes = await fetch(url, {
       method: 'POST',
-      headers,
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
+        generationConfig: { temperature: 0.8, maxOutputTokens: 4096 }
       })
     });
 
