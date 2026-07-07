@@ -3,7 +3,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  // 환경변수에 섞여 들어올 수 있는 BOM 등 비ASCII 문자 제거
+  const apiKey = (process.env.GEMINI_API_KEY || '').replace(/[^\x21-\x7E]/g, '');
   if (!apiKey) {
     return res.status(500).json({ error: 'API 키가 서버에 설정되지 않았습니다.' });
   }
