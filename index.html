@@ -300,6 +300,11 @@
         <div class="cta-title">모의고사 모드</div>
         <div class="cta-sub">대본 없이 주제만 보고 타이머 안에 답변, 녹음으로 점검</div>
       </div>
+      <div class="home-cta" id="ctaMysteryTime">
+        <span class="cta-icon">🕵️</span>
+        <div class="cta-title">미스터리 타임</div>
+        <div class="cta-sub">피의게임3 룰 그대로, AI 호스트와 함께하는 추리 키워드 게임</div>
+      </div>
     </div>
 
     <h2 style="font-size:13px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">저장된 대본 묶음</h2>
@@ -1112,6 +1117,9 @@ document.getElementById('ctaMockTest').addEventListener('click', ()=>{
   document.getElementById('mockRunning').style.display = 'none';
   document.getElementById('mockResult').style.display = 'none';
   showView('mockView');
+});
+document.getElementById('ctaMysteryTime').addEventListener('click', ()=>{
+  window.location.href = './mystery-time.html';
 });
 document.getElementById('mockBackHome').addEventListener('click', ()=>{
   stopMockTimer();

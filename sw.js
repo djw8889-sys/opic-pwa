@@ -1,7 +1,8 @@
-const CACHE_NAME = 'myopic-cache-v3';
+const CACHE_NAME = 'myopic-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './mystery-time.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
