@@ -453,13 +453,22 @@ function escapeHtml(str){
   return d.innerHTML;
 }
 
-async function callAI(prompt){
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function callAI(prompt, retriesLeft = 3){
   const res = await fetch('/api/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt })
   });
+  if(res.status === 429 && retriesLeft > 0){
+    await sleep((4 - retriesLeft) * 4000 + 3000);
+    return callAI(prompt, retriesLeft - 1);
+  }
   if(!res.ok){
+    if(res.status === 429){
+      throw new Error('AI 사용량이 순간적으로 몰렸어요. 잠시(약 1분) 후 다시 시도해주세요.');
+    }
     const err = await res.json().catch(()=>({}));
     throw new Error(err.error || `API 오류 (${res.status})`);
   }
