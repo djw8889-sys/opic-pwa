@@ -16,8 +16,8 @@ export default async function handler(req, res) {
 
   try {
     // x-goog-api-key 헤더는 신형(AQ.)·구형(AIzaSy) 키 모두 지원
-    // gemini-2.0-flash는 무료 할당량이 0이라 2.5-flash 사용
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+    // 무료 하루 한도가 넉넉한 flash-lite 사용 (flash 대비 약 4배)
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
     const geminiRes = await fetch(url, {
       method: 'POST',
